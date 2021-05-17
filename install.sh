@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-VERSION="v0.0.1-beta.0"
+VERSION="v0.0.1-beta.1"
 GITHUB_REPO="JonDotsoy/git-forget"
 GITHUB_REF_DOWNLOAD="https://api.github.com/repos/$GITHUB_REPO/tarball/$VERSION"
 DIROUT="$HOME/.alias/git-forget"
