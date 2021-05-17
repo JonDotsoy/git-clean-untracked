@@ -34,7 +34,7 @@ function git-forget__remove() {
     fi
 }
 
-function git-forget__list() {
+function __git-forget__list() {
     fileIgnored=($(git status --ignored -s))
     ignoreforget=(.gitforgetignore .env)
 
@@ -42,28 +42,43 @@ function git-forget__list() {
         ignoreforget+=($(cat .gitforgetignore))
     fi
 
-    for e in $fileIgnored; do
-        if [[ $e != "!!" ]]; then
-            a=$e
-            __git-forget__match-expr $e $ignoreforget && {
-                # echo Success $a
-                echo $a
-            }
+    for ((i = 1; i <= ${#fileIgnored[@]}; i += 2)); do
+        fileStatus=${fileIgnored[$i]}
+        file=${fileIgnored[(i + 1)]}
+
+        # echo "Pre Status: $fileStatus File: $file"
+
+        if [[ $fileStatus = "!!" ]]; then
+            filea=$file
+            statusIgnored="$(__git-forget__match-expr $filea $ignoreforget && echo noignored || echo ignored)"
+            # echo "\tFilea: ${filea} Status: $fileStatus File: $file Status Ignored: $statusIgnored"
+
+            if [[ $statusIgnored = "noignored" ]]; then
+                echo $file
+            fi
         fi
     done
 }
 
 function git-forget() {
-    listFiles=($(git-forget__list))
+    if [[ $1 = "list-debug" ]]; then
+        __git-forget__list
+        return 0
+    fi
 
     if [[ $1 = "list" || $1 = "ls" ]]; then
+        listFiles=($(__git-forget__list))
+
         for file in $listFiles; do
+            # echo $file
             ls ${@:2} $file
         done
         return 0
     fi
 
     if [[ $1 = "rm" ]]; then
+        listFiles=($(__git-forget__list))
+
         for file in $listFiles; do
             git-forget__remove $file
         done
