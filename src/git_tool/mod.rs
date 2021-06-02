@@ -25,12 +25,50 @@ pub mod git_tool {
 
     pub fn is_relative(&self) -> bool {
       let is_relative = Path::new(&self.path).is_relative();
+
       is_relative
     }
 
-    pub fn to_str(self) -> String {
-      let _a = "";
-      self.path
+    pub fn unlink(&self) {
+      let path = self.to_str().to_string();
+      let is_dir = self.path_buf.is_dir();
+      let is_file = self.path_buf.is_file();
+
+      if is_dir {
+        std::fs::remove_dir_all(&self.path_buf).expect(&format!("Cannot found directory {}", path));
+        println!(
+          "{}{}{} removed",
+          color::Fg(color::Blue),
+          &path,
+          color::Fg(color::Reset)
+        );
+      }
+
+      if is_file {
+        std::fs::remove_file(&self.path_buf).expect(&format!("Cannot found directory {}", path));
+        println!(
+          "{}{}{} removed",
+          color::Fg(color::Blue),
+          &path,
+          color::Fg(color::Reset)
+        );
+      }
+    }
+
+    pub fn to_str(&self) -> String {
+      let mut relative_path = self
+        .path_buf
+        .strip_prefix(std::env::current_dir().expect("Cannot found current dir (PWD)"))
+        .expect("No exists valid relative path")
+        .to_str()
+        .expect("Relative path is None")
+        .to_string();
+
+      if self.path_buf.is_dir() {
+        relative_path += "/";
+      }
+
+      relative_path
     }
   }
 
@@ -44,7 +82,7 @@ pub mod git_tool {
       Git { files: vec![] }
     }
 
-    pub fn read_status_ignored(&mut self) {
+    pub fn track_status_ignored(&mut self) {
       let output = std::process::Command::new("git")
         .args(&["status", "-s", "--ignored=matching", "-z"])
         .output()

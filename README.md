@@ -1,7 +1,12 @@
-# Git Forget
+# Git clean-untracked
 
-Script installation
+Script git clean ignored files.
 
-```sh
-curl https://raw.githubusercontent.com/JonDotsoy/git-forget/v0.0.1-beta.1/install.sh | sh
+How to use in your terminal run the script below.
+
+```shell
+$ git clean-untracked rm
+# Alias
+$ git cu rm
 ```
+
