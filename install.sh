@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-VERSION="v0.2.0"
+VERSION="v0.3.0"
 GITHUB_REPO="JonDotsoy/git-clean-untracked"
 DIROUT="$HOME/.git-alias/git-forget"
 ASSET_BROWSER_DOWNLOAD_URL="https://github.com/$GITHUB_REPO/releases/download/$VERSION/git-clean-untracked"
