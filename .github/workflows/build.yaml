@@ -1,0 +1,14 @@
+name: build and publish
+
+on: push
+
+jobs:
+  pre:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure Cargo
+        uses: actions-rs/cargo@v1
+        with:
+          command: cargo b --release --bins
