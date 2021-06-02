@@ -1,6 +1,6 @@
 [package]
 name = "git-clean-untracked"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Jonathan Delgado <hi@jon.soy> (https://jon.soy)"]
 edition = "2018"
 publish = false
