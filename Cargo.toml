@@ -9,4 +9,4 @@ publish = false
 
 [dependencies]
 termion = "*"
-
+sentry = "0.21.0"
