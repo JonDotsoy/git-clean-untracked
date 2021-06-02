@@ -1,32 +1,14 @@
 #!/usr/bin/env sh
 
-VERSION="v0.0.1-beta.1"
-GITHUB_REPO="JonDotsoy/git-forget"
-GITHUB_REF_DOWNLOAD="https://api.github.com/repos/$GITHUB_REPO/tarball/$VERSION"
-DIROUT="$HOME/.alias/git-forget"
-FILEOUT="$DIROUT/d-$VERSION.tar.gz"
-GIT="git@github.com:JonDotsoy/git-forget.git"
-SCRIPTEND="$DIROUT/git-forget.bash"
+VERSION="v0.1.0"
+GITHUB_REPO="JonDotsoy/git-clean-untracked"
+DIROUT="$HOME/.git-alias/git-forget"
+ASSET_BROWSER_DOWNLOAD_URL="https://github.com/$GITHUB_REPO/releases/download/$VERSION/git-clean-untracked"
+GIT_ALIAS_SCRIPT="!$DIROUT/git-clean-untracked"
 
-# mkdir -p $DIROUT
-# echo curl -L $GITHUB_REF_DOWNLOAD -o $FILEOUT
-# tar xvf -C $DIROUT $FILEOUT
+mkdir -p $DIROUT
+curl --location --request GET -o "$DIROUT/git-clean-untracked" $ASSET_BROWSER_DOWNLOAD_URL
+chmod +x "$DIROUT/git-clean-untracked"
 
-# curl \
-#     -H "Accept: application/vnd.github.v3+json" \
-#     https://api.github.com/repos/JonDotsoy/git-forget/contents/git-forget.bash?ref=$VERSION
-
-git clone $GIT $DIROUT || {
-    echo "Already cloned"
-}
-
-cd $DIROUT
-
-git fetch &&
-    git checkout $VERSION &&
-    git config --global alias.forget "!f() { source $SCRIPTEND; git_forget \$@; }; f \$@"
-
-echo "============================================================"
-echo ""
-echo "Run `git forget`"
-echo ""
+git config --global alias.clean-untracked $GIT_ALIAS_SCRIPT
+git config --global alias.cu $GIT_ALIAS_SCRIPT
