@@ -10,3 +10,10 @@ $ git clean-untracked rm
 $ git cu rm
 ```
 
+## How to install
+
+With shell (sh terminal), copy and execute the next scripts.
+
+```sh
+curl --location --request GET 'https://github.com/JonDotsoy/git-clean-untracked/raw/v0.2.0/install.sh' | sh
+```
