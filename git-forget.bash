@@ -43,10 +43,8 @@ function __git-forget__list() {
     fi
 
     for ((i = 1; i <= ${#fileIgnored[@]}; i += 2)); do
-        fileStatus=${fileIgnored[$i]}
-        file=${fileIgnored[(i + 1)]}
-
-        # echo "Pre Status: $fileStatus File: $file"
+        file=${fileIgnored[$i]}
+        fileStatus=${fileIgnored[(i + 1)]}
 
         if [[ $fileStatus = "!!" ]]; then
             filea=$file
@@ -60,7 +58,7 @@ function __git-forget__list() {
     done
 }
 
-function git-forget() {
+function __git-forget-main() {
     if [[ $1 = "list-debug" ]]; then
         __git-forget__list
         return 0
@@ -70,8 +68,8 @@ function git-forget() {
         listFiles=($(__git-forget__list))
 
         for file in $listFiles; do
-            # echo $file
-            ls ${@:2} $file
+            echo "$file"
+            # ls ${@:2} $file
         done
         return 0
     fi
@@ -91,3 +89,8 @@ function git-forget() {
     echo '   rm                Memove files'
     echo '   list, ls          List files to remove'
 }
+
+#
+#
+#
+__git-forget-main $@

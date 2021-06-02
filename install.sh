@@ -6,6 +6,7 @@ GITHUB_REF_DOWNLOAD="https://api.github.com/repos/$GITHUB_REPO/tarball/$VERSION"
 DIROUT="$HOME/.alias/git-forget"
 FILEOUT="$DIROUT/d-$VERSION.tar.gz"
 GIT="git@github.com:JonDotsoy/git-forget.git"
+SCRIPTEND="$DIROUT/git-forget.bash"
 
 # mkdir -p $DIROUT
 # echo curl -L $GITHUB_REF_DOWNLOAD -o $FILEOUT
@@ -22,11 +23,10 @@ git clone $GIT $DIROUT || {
 cd $DIROUT
 
 git fetch &&
-    git checkout $VERSION
+    git checkout $VERSION &&
+    git config --global alias.forget "!f() { source $SCRIPTEND; git_forget \$@; }; f \$@"
 
 echo "============================================================"
 echo ""
-echo "Copy the next line into .zshrc, .bashrc or .shrc:"
-echo ""
-echo "source $DIROUT/git-forget.bash"
+echo "Run `git forget`"
 echo ""
